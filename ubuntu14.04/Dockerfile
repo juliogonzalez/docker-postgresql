@@ -1,15 +1,16 @@
-FROM ubuntu:12.04
+FROM ubuntu:14.04
 MAINTAINER Julio Gonzalez Gil <git@juliogonzalez.es>
 
 USER root
 
 # Set locale (will be used by PostgreSQL initdb later on)
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US:en
-ENV LC_ALL en_US.UTF-8
 RUN DEBIAN_FRONTEND=noninteractive locale-gen en_US.UTF-8 && \
     DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales && \
     update-locale LANG=en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
+
 
 # Default UID/GID for mounting folders (used at jenkins slaves)
 ARG UID=500
