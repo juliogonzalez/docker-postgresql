@@ -26,7 +26,9 @@ ENV POSTGRESQL_VER=${POSTGRESQL_VER}
 
 # Add PostgreSQL's repository
 ADD files/postgresql.repo /etc/yum.repos.d/postgresql-${POSTGRESQL_VER}.repo
-RUN mv /etc/yum.repos.d/postgresql-${POSTGRESQL_VER}.repo /etc/yum.repos.d/postgresql-${POSTGRESQL_VER/./}.repo && \
+RUN if [ ! -f /etc/yum.repos.d/postgresql-${POSTGRESQL_VER/./}.repo ]; then \
+      mv /etc/yum.repos.d/postgresql-${POSTGRESQL_VER}.repo /etc/yum.repos.d/postgresql-${POSTGRESQL_VER/./}.repo; \
+    fi && \
     sed -i -e "s/<!POSTGRESQL_VER!>/${POSTGRESQL_VER}/g" /etc/yum.repos.d/postgresql-${POSTGRESQL_VER/./}.repo
 
 # Pass the output of date command as DATE argument if you want 
@@ -43,8 +45,9 @@ RUN rpm -qa --qf "%{NAME}\n" > /opt/packages-image.txt && \
       postgresql${POSTGRESQL_VER/./}-devel && \
     yum -q clean all # ${DATE}
 
+USER postgres
 # Initialize PostgreSQL cluster
-RUN service postgresql-${POSTGRESQL_VER} initdb
+RUN /usr/pgsql-${POSTGRESQL_VER}/bin/initdb -D /var/lib/pgsql/${POSTGRESQL_VER}/data
 
 # Allow postgresql password acess from localhost
 RUN sed -i -r -e 's/host\s+all\s+all\s+127.0.0.1\/32\s+ident/host all all 127.0.0.1\/32 password/' /var/lib/pgsql/${POSTGRESQL_VER}/data/pg_hba.conf
@@ -54,7 +57,5 @@ EXPOSE 5432
 
 # Add VOLUMEs to allow backup of config, logs and databases
 VOLUME  [ "/var/lib/pgsql"]
-
-USER postgres
 
 CMD ["/bin/bash", "/opt/start_postgresql.sh"]

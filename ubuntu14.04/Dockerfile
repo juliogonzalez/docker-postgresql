@@ -29,7 +29,7 @@ ARG POSTGRESQL_VER=9.5
 ENV POSTGRESQL_VER=${POSTGRESQL_VER}
 
 # Add PostgreSQL's repository
-RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg ${POSTGRESQL_VER} main" >> /etc/apt/sources.list.d/pgdg.list
+RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg ${POSTGRESQL_VER} main" >> /etc/apt/sources.list.d/pgdg.list
 
 # Pass the output of date command as DATE argument if you want 
 # make sure that the image is generated using the lastest 
