@@ -8,7 +8,7 @@ SCRIPT=$(basename ${0})
 
 # Supported distributions and PostgreSQL versions
 SUPPORTEDDISTROS="centos6 ubuntu14.04"
-SUPPORTEDPGVERS="9.4 9.5 9.6 10"
+SUPPORTEDPGVERS="9.4 9.5 9.6 10 11"
 
 # Parameters for docker
 GID=$(id -G|cut -d' ' -f1)
