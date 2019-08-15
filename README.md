@@ -3,16 +3,19 @@
 Current distributions available:
 
 * CentOS 6
-* Ubuntu 12.04
+* CentOS 7
+* Ubuntu 14.04
+* Ubuntu 16.04
+* Ubuntu 18.04
 
 Current PostgreSQL versions available:
 
-* 9.2
 * 9.3
 * 9.4
 * 9.5
 * 9.6
 * 10
+* 11
 
 # Building images
 

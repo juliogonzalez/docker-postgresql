@@ -7,7 +7,7 @@ LANG=en_EN
 SCRIPT=$(basename ${0})
 
 # Supported distributions and PostgreSQL versions
-SUPPORTEDDISTROS="centos6 centos7 ubuntu14.04"
+SUPPORTEDDISTROS="centos6 centos7 ubuntu14.04 ubuntu16.04 ubuntu18.04"
 SUPPORTEDPGVERS="9.3 9.4 9.5 9.6 10 11"
 
 # Parameters for docker
