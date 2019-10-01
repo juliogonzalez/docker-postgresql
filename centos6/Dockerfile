@@ -23,13 +23,17 @@ ADD files/*.sh /opt/
 # Default version
 ARG POSTGRESQL_VER=9.5
 ENV POSTGRESQL_VER=${POSTGRESQL_VER}
+ARG POSTGRESQL_TESTING=0
+ENV POSTGRESQL_TESTING=${POSTGRESQL_TESTING}
 
 # Add PostgreSQL's repository
 ADD files/postgresql.repo /etc/yum.repos.d/postgresql-${POSTGRESQL_VER}.repo
 RUN if [ ! -f /etc/yum.repos.d/postgresql-${POSTGRESQL_VER/./}.repo ]; then \
       mv /etc/yum.repos.d/postgresql-${POSTGRESQL_VER}.repo /etc/yum.repos.d/postgresql-${POSTGRESQL_VER/./}.repo; \
     fi && \
-    sed -i -e "s/<!POSTGRESQL_VER!>/${POSTGRESQL_VER}/g" /etc/yum.repos.d/postgresql-${POSTGRESQL_VER/./}.repo
+    [ ${POSTGRESQL_TESTING} -eq 1 ] && TESTING="testing\/"; \
+    sed -i -e "s/yum.postgresql.org\/<!POSTGRESQL_VER!>/yum.postgresql.org\/${TESTING}${POSTGRESQL_VER}/g" /etc/yum.repos.d/postgresql-${POSTGRESQL_VER/./}.repo; \
+    sed -i -e "s/<!POSTGRESQL_VER!>/${POSTGRESQL_VER}-testing/g" /etc/yum.repos.d/postgresql-${POSTGRESQL_VER/./}.repo
 
 # Pass the output of date command as DATE argument if you want 
 # make sure that the image is generated using the lastest 

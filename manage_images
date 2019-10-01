@@ -8,7 +8,7 @@ SCRIPT=$(basename ${0})
 
 # Supported distributions and PostgreSQL versions
 SUPPORTEDDISTROS="centos6 centos7 ubuntu14.04 ubuntu16.04 ubuntu18.04"
-SUPPORTEDPGVERS="9.3 9.4 9.5 9.6 10 11"
+SUPPORTEDPGVERS="9.3 9.4 9.5 9.6 10 11 12-testing"
 
 # Parameters for docker
 GID=$(id -G|cut -d' ' -f1)
@@ -66,14 +66,18 @@ check_updates() {
 update_image() {
   local IMAGE_NAME="${1}"
   local DISTRO="${2}"
-  local VERSION="${3}"
+  local VERSION="${3/-testing}"
   local FULL="${4}"
+  local TESTING=0
+  if [ "${3##*-}" == "testing" ]; then
+    TESTING=1
+  fi
   if [ "${FULL}" != "TRUE" ]; then
     NOCACHE='--no-cache'
   fi
   local BASE_IMAGE=$(gawk 'match($0, /^FROM (.*)$/, a) {print a[1]}' ${DISTRO}/Dockerfile)
   docker pull ${BASE_IMAGE}
-  docker build --pull --build-arg POSTGRESQL_VER=${VERSION} --build-arg UID=${UID} --build-arg GID=${GID} --build-arg DATE=${DATE} ${NOCACHE} -t ${IMAGE_NAME} ${DISTRO}/
+  docker build --pull --build-arg POSTGRESQL_VER=${VERSION} --build-arg POSTGRESQL_TESTING=${TESTING} --build-arg UID=${UID} --build-arg GID=${GID} --build-arg DATE=${DATE} ${NOCACHE} -t ${IMAGE_NAME} ${DISTRO}/
 }
 
 ARGS=$(getopt -o h --long help,action:,versions:,distributions: -n "${SCRIPT}" -- "$@")

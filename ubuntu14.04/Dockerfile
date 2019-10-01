@@ -27,9 +27,11 @@ ADD files/*.sh /opt/
 # Default version
 ARG POSTGRESQL_VER=9.5
 ENV POSTGRESQL_VER=${POSTGRESQL_VER}
+ARG POSTGRESQL_TESTING=0
+ENV POSTGRESQL_TESTING=${POSTGRESQL_TESTING}
 
 # Add PostgreSQL's repository
-RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg ${POSTGRESQL_VER} main" >> /etc/apt/sources.list.d/pgdg.list
+RUN [ ${POSTGRESQL_TESTING} -eq 1 ] && TESTING="-testing"; echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg${testing} ${POSTGRESQL_VER} main" >> /etc/apt/sources.list.d/pgdg.list
 
 # Pass the output of date command as DATE argument if you want 
 # make sure that the image is generated using the lastest 

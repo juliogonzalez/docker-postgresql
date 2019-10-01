@@ -16,6 +16,7 @@ Current PostgreSQL versions available:
 * 9.6
 * 10
 * 11
+* 12-testing
 
 # Building images
 
