@@ -45,7 +45,7 @@ ARG DATE=None
 # Add the PostgreSQL PGP key to verify their Debian packages and install them
 # Key should be the same as https://www.postgresql.org/media/keys/ACCC4CF8.asc
 # Then generate a list of original packages, upgrade and install PostgreSQL and sudo
-RUN apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8 && \
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8 && \
     dpkg --get-selections | grep 'install' | grep -v 'deinstall'|cut -f1 > /opt/packages-image.txt && \
     apt-get -qq -o=Dpkg::Use-Pty=0 update > /dev/null && \
     LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 DEBIAN_FRONTEND=noninteractive apt-get -qq -o=Dpkg::Use-Pty=0 -y dist-upgrade > /dev/null && \
