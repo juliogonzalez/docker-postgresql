@@ -40,8 +40,9 @@ RUN if [ ! -f /etc/yum.repos.d/postgresql-${POSTGRESQL_VER/./}.repo ]; then \
 # PostgreSQL packages (cache will be used for previous steps)
 ARG DATE=None
 
-# Generate a list of original packages, update and install PostgreSQL and sudo
+# Generate a list of original packages, add CentOS SCL, update and install PostgreSQL and sudo
 RUN rpm -qa --qf "%{NAME}\n" > /opt/packages-image.txt && \
+    yum -y -q install centos-release-scl && \
     yum -y -q update && \
     yum -y -q install \
       postgresql${POSTGRESQL_VER/./} \
