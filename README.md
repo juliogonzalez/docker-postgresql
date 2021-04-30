@@ -2,9 +2,7 @@
 
 Current distributions available:
 
-* CentOS 6
 * CentOS 7
-* Ubuntu 16.04
 * Ubuntu 18.04
 
 Current PostgreSQL versions available:
