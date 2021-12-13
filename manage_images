@@ -14,6 +14,9 @@ SUPPORTEDPGVERS="9.3 9.4 9.5 9.6 10 11 12 13"
 GID=$(id -G|cut -d' ' -f1)
 DATE=$(date +%Y%m%dT%H%M%s%N)
 
+# Use docker by default
+TOOL="docker"
+
 help() {
   echo ""
   echo "Script to create PostgreSQL docker images"
@@ -36,6 +39,12 @@ help() {
   echo "    Optional: A comma separated list of versions (supported: $(echo ${SUPPORTEDPGVERS}|sed -e 's/ /, /g'))"
   echo " --distributions=<DISTRIBUTIONS>"
   echo "    Optional: A comma separated list of distributions (supported: $(echo ${SUPPORTEDDISTROS}|sed -e 's/ /, /g'))"
+  echo " --uid=<UID>"
+  echo "    Optional: The UID to be used for bind mounts. The default value is the current user UID"
+  echo " --gid=<GID>"
+  echo "    Optional: The GID to be used for bind mounts. The default value is the current user GID"
+  echo " --podman"
+  echo "    Optional: Use podman instead of docker"
   echo ""
   exit 1
 }
@@ -57,9 +66,9 @@ check_updates() {
   local DISTRO="${2}"
   local VERSION="${3}"
   local CONTNAME="juliogonzalez-${DISTRO}-postgresql${VERSION}"
-  docker run -i -u root --name ${CONTNAME} ${IMAGE_NAME} /opt/check_updates.sh
+  ${TOOL} run -i -u root --name ${CONTNAME} ${IMAGE_NAME} /opt/check_updates.sh
   local UPDATES=${?}
-  docker rm ${CONTNAME} > /dev/null
+  ${TOOL} rm ${CONTNAME} > /dev/null
   return  "${UPDATES}"
 }
 
@@ -76,11 +85,11 @@ update_image() {
     NOCACHE='--no-cache'
   fi
   local BASE_IMAGE=$(gawk 'match($0, /^FROM (.*)$/, a) {print a[1]}' ${DISTRO}/Dockerfile)
-  docker pull ${BASE_IMAGE}
-  docker build --pull --build-arg POSTGRESQL_VER=${VERSION} --build-arg POSTGRESQL_TESTING=${TESTING} --build-arg UID=${UID} --build-arg GID=${GID} --build-arg DATE=${DATE} ${NOCACHE} -t ${IMAGE_NAME} ${DISTRO}/
+  ${TOOL} pull ${BASE_IMAGE}
+  ${TOOL} build --pull --build-arg POSTGRESQL_VER=${VERSION} --build-arg POSTGRESQL_TESTING=${TESTING} --build-arg UID=${BM_UID} --build-arg GID=${BM_GID} --build-arg DATE=${DATE} ${NOCACHE} -t ${IMAGE_NAME} ${DISTRO}/
 }
 
-ARGS=$(getopt -o h --long help,action:,versions:,distributions: -n "${SCRIPT}" -- "$@")
+ARGS=$(getopt -o h --long help,action:,versions:,distributions:,uid:,gid:,podman -n "${SCRIPT}" -- "$@")
 if [ $? -ne 0 ];
 then
   print_incorrect_syntax
@@ -95,10 +104,17 @@ while true ; do
     --action)        ACTION="${2}"; shift 2 ;;
     --versions)      VERSIONS="${2}"; shift 2;;
     --distributions) DISTROS="${2}"; shift 2;;
+    --uid)           BM_UID="${2}"; shift 2;;
+    --gid)           BM_GID="${2}"; shift 2;;
+    --podman)        TOOL="podman"; shift 1;;
     --)              shift ; break ;;
     *)               print_incorrect_syntax; exit 1 ;;
   esac
 done
+
+# Set default UID/GID if not present
+if [ "${BM_UID}" == "" ]; then BM_UID=${UID}; fi
+if [ "${BM_GID}" == "" ]; then BM_UID=${GID}; fi
 
 # Check actions
 case "${ACTION}" in
@@ -182,12 +198,12 @@ for DISTRO in ${ADISTROS}; do
       echo " Promoting ${IMAGE_NAME_EXP} as:"
       echo "  ${IMAGE_NAME}"
       echo "================================================================================="
-      docker tag ${IMAGE_NAME_EXP} ${IMAGE_NAME}
+      ${TOOL} tag ${IMAGE_NAME_EXP} ${IMAGE_NAME}
     elif [ "${ACTION}" == "publish" ]; then
       echo "================================================================================="
       echo " Publishing ${IMAGE_NAME}..."
       echo "================================================================================="
-      docker push ${IMAGE_NAME}
+      ${TOOL} push ${IMAGE_NAME}
     fi
   done
 done
