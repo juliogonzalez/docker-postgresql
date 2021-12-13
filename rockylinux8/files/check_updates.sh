@@ -10,7 +10,7 @@
 PACKAGES_ORIG='/opt/packages-image.txt'
 PACKAGES_UPDATES='/opt/packages-updates.txt'
 
-yum list updates|awk 'f;/^Updated Packages/{f=1}'|cut -d'.' -f1 > ${PACKAGES_UPDATES}
+dnf list updates|awk 'f;/^Available Upgrades/{f=1}'|cut -d'.' -f1 > ${PACKAGES_UPDATES}
 
 EXIT=0
 PFOUND=0
