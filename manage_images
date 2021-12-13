@@ -114,7 +114,7 @@ done
 
 # Set default UID/GID if not present
 if [ "${BM_UID}" == "" ]; then BM_UID=${UID}; fi
-if [ "${BM_GID}" == "" ]; then BM_UID=${GID}; fi
+if [ "${BM_GID}" == "" ]; then BM_GID=${GID}; fi
 
 # Check actions
 case "${ACTION}" in
