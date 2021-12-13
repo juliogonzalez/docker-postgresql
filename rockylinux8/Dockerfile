@@ -40,7 +40,7 @@ RUN if [ ! -f /etc/yum.repos.d/postgresql-${POSTGRESQL_VER/./}.repo ]; then \
 # PostgreSQL packages (cache will be used for previous steps)
 ARG DATE=None
 
-# Generate a list of original packages, add EPEL, disable the default PostgreSQL module, update and install PostgreSQL and sudo
+# Generate a list of original packages, add EPEL, disable the default PostgreSQL module, update and install PostgreSQL
 RUN rpm -qa --qf "%{NAME}\n" > /opt/packages-image.txt && \
     dnf -y -q install epel-release && \
     dnf -y -q module disable postgresql && \
