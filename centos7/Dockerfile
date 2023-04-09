@@ -1,4 +1,4 @@
-FROM centos:centos7
+FROM docker.io/centos:centos7
 MAINTAINER Julio Gonzalez Gil <git@juliogonzalez.es>
 
 USER root

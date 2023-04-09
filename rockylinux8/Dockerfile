@@ -1,4 +1,4 @@
-FROM rockylinux/rockylinux:8
+FROM docker.io/rockylinux/rockylinux:8
 MAINTAINER Julio Gonzalez Gil <git@juliogonzalez.es>
 
 USER root

@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM docker.io/ubuntu:20.04
 MAINTAINER Julio Gonzalez Gil <git@juliogonzalez.es>
 
 USER root
