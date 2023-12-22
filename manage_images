@@ -10,6 +10,9 @@ SCRIPT=$(basename ${0})
 SUPPORTEDDISTROS="centos7 rockylinux8 ubuntu18.04 ubuntu20.04 opensuseleap15.5"
 SUPPORTEDPGVERS="9.3 9.4 9.5 9.6 10 11 12 13 14 15 16"
 
+# Ignored combinations, will exit without errors so the CI does not fail
+IGNOREDCOMBINATIONS="centos7|16"
+
 # Parameters for the image
 GID=$(id -G|cut -d' ' -f1)
 DATE=$(date +%Y%m%dT%H%M%s%N)
@@ -186,6 +189,15 @@ else
      fi
   done
 fi
+
+for IGNOREDCOMBINATION in ${IGNOREDCOMBINATIONS}; do
+  IGNOREDDISTRO=$(echo ${IGNOREDCOMBINATION}|cut -d'|' -f1)
+  IGNOREDVER=$(echo ${IGNOREDCOMBINATION}|cut -d'|' -f2)
+  if [ "${IGNOREDDISTRO}" == "${DISTRO}" ] && [ "${IGNOREDVER}" == "${VERSION}" ]; then
+    echo "${IGNOREDDISTRO} with PostgreSQL ${IGNOREDVER} is not available"
+    exit 0
+  fi
+done
 
 for DISTRO in ${ADISTROS}; do
   for VERSION in ${AVERSIONS}; do
