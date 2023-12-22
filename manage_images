@@ -109,7 +109,7 @@ update_image() {
   ${CENGINE} build --pull --build-arg POSTGRESQL_VER=${VERSION} --build-arg POSTGRESQL_TESTING=${TESTING} --build-arg UID=${BM_UID} --build-arg GID=${BM_GID} --build-arg DATE=${DATE} ${NOCACHE} -t ${IMAGE_NAME} ${DISTRO}/
 }
 
-ARGS=$(getopt -o h --long help,action:,versions:,distributions:,uid:,gid:,podman,registry:,username:,password:,errorcodes -n "${SCRIPT}" -- "$@")
+ARGS=$(getopt -o h --long help,action:,versions:,distributions:,uid:,gid:,docker,registry:,username:,password:,errorcodes -n "${SCRIPT}" -- "$@")
 if [ $? -ne 0 ];
 then
   print_incorrect_syntax
