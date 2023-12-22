@@ -37,4 +37,4 @@ fi
 ${PG_PATH}/pg_ctl -w stop -D ${DB_PATH}/data
 
 echo "Starting PostgreSQL ${PG_VER}..."
-${PG_PATH}/postmaster -D ${DB_PATH}/data >> ${DB_PATH}/pgstartup.log 2>&1
+${PG_PATH}/postgres -D ${DB_PATH}/data >> ${DB_PATH}/pgstartup.log 2>&1
