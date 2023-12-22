@@ -46,8 +46,7 @@ RUN rpm -qa --qf "%{NAME}\n" > /opt/packages-image.txt && \
     zypper -q install -y --allow-downgrade \
       postgresql${POSTGRESQL_VER/./} \
       postgresql${POSTGRESQL_VER/./}-server \
-      postgresql${POSTGRESQL_VER/./}-devel \
-      postgresql${POSTGRESQL_VER/./}-server-devel && \
+      postgresql${POSTGRESQL_VER/./}-devel && \
     zypper -q clean -a # ${DATE}
 
 USER postgres
