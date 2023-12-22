@@ -38,4 +38,4 @@ fi
 ${PG_PATH}/pg_ctl -w stop -D ${DB_PATH} -o "-c config_file=${ETC_PATH}/postgresql.conf"
 
 echo "Starting PostgreSQL ${PG_VER}..."
-${PG_PATH}/postmaster -D ${DB_PATH} --config_file=${ETC_PATH}/postgresql.conf >> /var/log/postgresql/postgresql-${PG_VER}-main.log 2>&1
+${PG_PATH}/postgres -D ${DB_PATH} --config_file=${ETC_PATH}/postgresql.conf >> /var/log/postgresql/postgresql-${PG_VER}-main.log 2>&1
