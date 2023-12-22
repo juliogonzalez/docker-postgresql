@@ -1,0 +1,10 @@
+[pgdg-<!POSTGRESQL_VER!>]
+name=PostgreSQL <!POSTGRESQL_VER!> SLES $releasever - $basearch
+enabled=1
+autorefresh=1
+baseurl=https://download.postgresql.org/pub/repos/zypp/<!POSTGRESQL_VER!>/suse/sles-$releasever-$basearch
+type=rpm-md
+gpgcheck=1
+gpgkey=https://download.postgresql.org/pub/repos/zypp/<!POSTGRESQL_VER!>/suse/sles-$releasever-$basearch/repodata/repomd.xml
+keeppackages=0
+priority=1
