@@ -8,7 +8,7 @@ SCRIPT=$(basename ${0})
 
 # Supported distributions and PostgreSQL versions
 SUPPORTEDDISTROS="centos7 rockylinux8 ubuntu18.04 ubuntu20.04"
-SUPPORTEDPGVERS="9.3 9.4 9.5 9.6 10 11 12 13 14 15"
+SUPPORTEDPGVERS="9.3 9.4 9.5 9.6 10 11 12 13 14 15 16"
 
 # Parameters for the image
 GID=$(id -G|cut -d' ' -f1)
