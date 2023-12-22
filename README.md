@@ -20,7 +20,7 @@ Current PostgreSQL versions available:
 * 13
 * 14
 * 15
-* 16
+* 16 (Unavailable for CentOS 7)
 
 # Building images
 
@@ -32,10 +32,10 @@ Run:
 
 # Running the images
 
-Tu run, for example PostgreSQL 9.2 under CentOS6:
+Tu run, for example PostgreSQL 15 under CentOS7:
 
 ```
-docker run -t --name test -e "DB_NAME=mydbname" -e "DB_PASS=mydbpassword" juliogonzalez/centos6-postgresql9.2
+docker run -t --name test -e "DB_NAME=mydbname" -e "DB_PASS=mydbpassword" juliogonzalez/centos7-postgresql15
 ```
 
 Use *-e "DB_NAME=mydbname"* if you want to create a database when the container is created
