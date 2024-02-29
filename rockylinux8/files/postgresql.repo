@@ -1,6 +1,6 @@
 [postgresql-<!POSTGRESQL_VER!>]
 name=PostgreSQL <!POSTGRESQL_VER!>
-baseurl=http://yum.postgresql.org/<!POSTGRESQL_VER!>/redhat/rhel-8-x86_64/
+baseurl=https://download.postgresql.org/pub/repos/yum/<!POSTGRESQL_VER!>/redhat/rhel-8-x86_64/
 enabled=1
 gpgcheck=1
-gpgkey=http://yum.postgresql.org/RPM-GPG-KEY-PGDG
+gpgkey=https://download.postgresql.org/pub/repos/yum/keys/PGDG-RPM-GPG-KEY-RHEL

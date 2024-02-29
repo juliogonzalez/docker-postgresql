@@ -32,7 +32,7 @@ RUN if [ ! -f /etc/yum.repos.d/postgresql-${POSTGRESQL_VER/./}.repo ]; then \
       mv /etc/yum.repos.d/postgresql-${POSTGRESQL_VER}.repo /etc/yum.repos.d/postgresql-${POSTGRESQL_VER/./}.repo; \
     fi && \
     [ ${POSTGRESQL_TESTING} -eq 1 ] && TESTING="testing\/"; \
-    sed -i -e "s/yum.postgresql.org\/<!POSTGRESQL_VER!>/yum.postgresql.org\/${TESTING}${POSTGRESQL_VER}/g" /etc/yum.repos.d/postgresql-${POSTGRESQL_VER/./}.repo; \
+    sed -i -e "s/download.postgresql.org\/pub\/repos\/yum\/<!POSTGRESQL_VER!>/download.postgresql.org\/pub\/repos\/yum\/${TESTING}${POSTGRESQL_VER}/g" /etc/yum.repos.d/postgresql-${POSTGRESQL_VER/./}.repo; \
     sed -i -e "s/<!POSTGRESQL_VER!>/${POSTGRESQL_VER}-testing/g" /etc/yum.repos.d/postgresql-${POSTGRESQL_VER/./}.repo
 
 # Pass the output of date command as DATE argument if you want 
