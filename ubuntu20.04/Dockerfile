@@ -34,9 +34,6 @@ ENV POSTGRESQL_VER=${POSTGRESQL_VER}
 ARG POSTGRESQL_TESTING=0
 ENV POSTGRESQL_TESTING=${POSTGRESQL_TESTING}
 
-# Add PostgreSQL's repository
-RUN [ ${POSTGRESQL_TESTING} -eq 1 ] && TESTING="-testing"; echo "deb https://download.postgresql.org/pub/repos/apt/ focal-pgdg${testing} ${POSTGRESQL_VER} main" >> /etc/apt/sources.list.d/pgdg.list
-
 # Pass the output of date command as DATE argument if you want 
 # make sure that the image is generated using the lastest 
 # PostgreSQL packages (cache will be used for previous steps)
@@ -45,10 +42,13 @@ ARG DATE=None
 # Add the PostgreSQL PGP key to verify their Debian packages and install them
 # Key should be the same as https://www.postgresql.org/media/keys/ACCC4CF8.asc
 # Then generate a list of original packages, upgrade and install PostgreSQL
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8 && \
-    dpkg --get-selections | grep 'install' | grep -v 'deinstall'|cut -f1 > /opt/packages-image.txt && \
+RUN dpkg --get-selections | grep 'install' | grep -v 'deinstall'|cut -f1 > /opt/packages-image.txt && \
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8 && \
     apt-get -qq -o=Dpkg::Use-Pty=0 update > /dev/null && \
+    LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 DEBIAN_FRONTEND=noninteractive apt-get -qq -o=Dpkg::Use-Pty=0 -y install ca-certificates && \
     LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 DEBIAN_FRONTEND=noninteractive apt-get -qq -o=Dpkg::Use-Pty=0 -y dist-upgrade > /dev/null && \
+    [ ${POSTGRESQL_TESTING} -eq 1 ] && TESTING="-testing"; echo "deb https://download.postgresql.org/pub/repos/apt/ focal-pgdg${testing} ${POSTGRESQL_VER} main" >> /etc/apt/sources.list.d/pgdg.list && \
+    apt-get -qq -o=Dpkg::Use-Pty=0 update > /dev/null && \
     LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 DEBIAN_FRONTEND=noninteractive apt-get -qq -o=Dpkg::Use-Pty=0 -y install \
      postgresql-${POSTGRESQL_VER} \
      postgresql-client-${POSTGRESQL_VER} \
