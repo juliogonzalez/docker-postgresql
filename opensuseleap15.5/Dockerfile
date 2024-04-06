@@ -59,6 +59,13 @@ RUN sed -i -r -e 's/host\s+all\s+all\s+127.0.0.1\/32\s+ident/host all all 127.0.
 # Expose the PostgreSQL port
 EXPOSE 5432
 
+# Seems there is a problem with the latest openSUSE MicroOS as if
+# userns is used to launch the container, the /var/log/postgresql
+# is owned by UID/GID 1002 which does not exist on the container or
+# the OS
+# I still could not find where the issue is
+RUN chmod 755 /var/lib/pgsql
+
 # Add VOLUMEs to allow backup of config, logs and databases
 VOLUME  [ "/var/lib/pgsql"]
 

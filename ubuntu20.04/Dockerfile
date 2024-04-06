@@ -64,6 +64,14 @@ RUN mkdir -p /var/run/postgresql/${POSTGRESQL_VER}-main.pg_stat_tmp && chown pos
 # Expose the PostgreSQL port
 EXPOSE 5432
 
+# Seems there is a problem with the latest openSUSE MicroOS as if
+# userns is used to launch the container, the /var/log/postgresql
+# is owned by UID/GID 1002 which does not exist on the container or
+# the OS
+# I still could not find where the issue is, but we do not need to
+# do anything for Ubuntu, unlike for other OS, as rights are
+# 755 already
+
 # Add VOLUMEs to allow backup of config, logs and databases
 VOLUME  ["/etc/postgresql", "/var/log/postgresql", "/var/lib/postgresql"]
 
