@@ -42,7 +42,8 @@ ARG DATE=None
 
 # Generate a list of original packages, update install PostgreSQL
 RUN rpm -qa --qf "%{NAME}\n" > /opt/packages-image.txt && \
-    zypper -q --gpg-auto-import-keys update -y && \
+    rpm --import https://zypp.postgresql.org/keys/PGDG-RPM-GPG-KEY-SLES15 && \
+    zypper -q update -y && \
     zypper -q install -y --allow-downgrade \
       postgresql${POSTGRESQL_VER/./} \
       postgresql${POSTGRESQL_VER/./}-server \

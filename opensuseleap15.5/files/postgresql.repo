@@ -5,6 +5,5 @@ autorefresh=1
 baseurl=https://download.postgresql.org/pub/repos/zypp/<!POSTGRESQL_VER!>/suse/sles-$releasever-$basearch
 type=rpm-md
 gpgcheck=1
-gpgkey=https://download.postgresql.org/pub/repos/zypp/keys/PGDG-RPM-GPG-KEY-SLES15
 keeppackages=0
 priority=1
