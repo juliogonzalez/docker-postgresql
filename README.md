@@ -5,6 +5,7 @@ Current distributions available:
 * openSUSE Leap 15.6
 * Rocky Linux 8
 * Ubuntu 20.04
+* Ubuntu 24.04
 
 Current PostgreSQL versions available:
 
