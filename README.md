@@ -20,6 +20,7 @@ Current PostgreSQL versions available:
 * 14
 * 15
 * 16
+* 17
 
 # Building images
 
