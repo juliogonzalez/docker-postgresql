@@ -2,7 +2,7 @@
 
 Current distributions available:
 
-* openSUSE Leap 15.5
+* openSUSE Leap 15.6
 * Rocky Linux 8
 * CentOS 7
 * Ubuntu 18.04
