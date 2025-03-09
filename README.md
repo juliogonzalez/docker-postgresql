@@ -4,7 +4,6 @@ Current distributions available:
 
 * openSUSE Leap 15.6
 * Rocky Linux 8
-* CentOS 7
 * Ubuntu 20.04
 
 Current PostgreSQL versions available:
@@ -19,7 +18,7 @@ Current PostgreSQL versions available:
 * 13
 * 14
 * 15
-* 16 (Unavailable for CentOS 7)
+* 16
 
 # Building images
 
@@ -31,10 +30,10 @@ Run:
 
 # Running the images
 
-Tu run, for example PostgreSQL 15 under CentOS7:
+Tu run, for example PostgreSQL 15 under Rocky Linux 8:
 
 ```
-docker run -t --name test -e "DB_NAME=mydbname" -e "DB_PASS=mydbpassword" juliogonzalez/centos7-postgresql15
+docker run -t --name test -e "DB_NAME=mydbname" -e "DB_PASS=mydbpassword" juliogonzalez/rockylinux8-postgresql15
 ```
 
 Use *-e "DB_NAME=mydbname"* if you want to create a database when the container is created
