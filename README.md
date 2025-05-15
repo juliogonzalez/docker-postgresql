@@ -4,23 +4,16 @@ Current distributions available:
 
 * openSUSE Leap 15.6
 * Rocky Linux 8
-* Ubuntu 20.04
 * Ubuntu 24.04
 
 Current PostgreSQL versions available:
 
-* 9.3
-* 9.4
-* 9.5
-* 9.6
-* 10
-* 11
-* 12
 * 13
 * 14
 * 15
 * 16
 * 17
+* 18
 
 # Building images
 
