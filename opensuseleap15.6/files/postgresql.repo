@@ -1,8 +1,8 @@
 [pgdg-<!POSTGRESQL_VER!>]
-name=PostgreSQL <!POSTGRESQL_VER!> SLES $releasever - $basearch
+name=PostgreSQL <!POSTGRESQL_VER!> SLES 15 - $basearch
 enabled=1
 autorefresh=1
-baseurl=https://download.postgresql.org/pub/repos/zypp/<!POSTGRESQL_VER!>/suse/sles-$releasever-$basearch
+baseurl=https://download.postgresql.org/pub/repos/zypp/<!POSTGRESQL_VER!>/suse/sles-15-$basearch
 type=rpm-md
 gpgcheck=1
 keeppackages=0

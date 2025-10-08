@@ -25,10 +25,10 @@ Run:
 
 # Running the images
 
-Tu run, for example PostgreSQL 15 under Rocky Linux 8:
+Tu run, for example PostgreSQL 18 under Rocky Linux 8:
 
 ```
-docker run -t --name test -e "DB_NAME=mydbname" -e "DB_PASS=mydbpassword" juliogonzalez/rockylinux8-postgresql15
+docker run -t --name test -e "DB_NAME=mydbname" -e "DB_PASS=mydbpassword" juliogonzalez/rockylinux8-postgresql:18
 ```
 
 Use *-e "DB_NAME=mydbname"* if you want to create a database when the container is created
