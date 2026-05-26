@@ -7,7 +7,7 @@ LANG=en_EN
 SCRIPT=$(basename ${0})
 
 # Supported distributions and PostgreSQL versions
-SUPPORTEDDISTROS="rockylinux8 ubuntu24.04 opensuseleap15.6"
+SUPPORTEDDISTROS="rockylinux8 ubuntu24.04 opensuseleap16.0"
 SUPPORTEDPGVERS="13 14 15 16 17 18"
 
 # Ignored combinations, will exit without errors so the CI does not fail
