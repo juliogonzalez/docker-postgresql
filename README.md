@@ -8,7 +8,7 @@ For example they are used as a base to build [container images for tds_fdw Count
 
 Current distributions available:
 
-* openSUSE Leap 15.6
+* openSUSE Leap 16.0
 * Rocky Linux 8
 * Ubuntu 24.04
 

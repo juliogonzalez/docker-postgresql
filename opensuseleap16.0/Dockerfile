@@ -1,4 +1,4 @@
-FROM docker.io/opensuse/leap:15.6
+FROM docker.io/opensuse/leap:16.0
 MAINTAINER Julio Gonzalez Gil <git@juliogonzalez.es>
 
 USER root
@@ -42,7 +42,7 @@ ARG DATE=None
 
 # Generate a list of original packages, update install PostgreSQL
 RUN rpm -qa --qf "%{NAME}\n" > /opt/packages-image.txt && \
-    rpm --import https://zypp.postgresql.org/keys/PGDG-RPM-GPG-KEY-SLES15 && \
+    rpm --import https://zypp.postgresql.org/keys/PGDG-RPM-GPG-KEY-SLES16 && \
     zypper -q update -y && \
     zypper -q install -y --allow-downgrade \
       postgresql${POSTGRESQL_VER/./} \
