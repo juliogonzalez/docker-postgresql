@@ -26,25 +26,19 @@ ENV POSTGRESQL_VER=${POSTGRESQL_VER}
 ARG POSTGRESQL_TESTING=0
 ENV POSTGRESQL_TESTING=${POSTGRESQL_TESTING}
 
-# Add PostgreSQL's repository
-ADD files/postgresql.repo /etc/zypp/repos.d/postgresql-${POSTGRESQL_VER}.repo
-RUN if [ ! -f /etc/zypp/repos.d/postgresql-${POSTGRESQL_VER/./}.repo ]; then \
-      mv /etc/zypp/repos.d/postgresql-${POSTGRESQL_VER}.repo /etc/zypp/repos.d/postgresql-${POSTGRESQL_VER/./}.repo; \
-    fi && \
-    [ ${POSTGRESQL_TESTING} -eq 1 ] && TESTING="testing\/" && \
-    sed -i -e "s|baseurl=https://download.postgresql.org/pub/repos/zypp/<!POSTGRESQL_VER!>|baseurl=https://download.postgresql.org/pub/repos/zypp/testing/${POSTGRESQL_VER}|" /etc/zypp/repos.d/postgresql-${POSTGRESQL_VER/./}.repo; \
-    sed -i -e "s/<!POSTGRESQL_VER!>/${POSTGRESQL_VER}/g" /etc/zypp/repos.d/postgresql-${POSTGRESQL_VER/./}.repo
-
 # Pass the output of date command as DATE argument if you want 
 # make sure that the image is generated using the lastest 
 # PostgreSQL packages (cache will be used for previous steps)
 ARG DATE=None
 
+# Add PostgreSQL's repository
+RUN rpm --import https://zypp.postgresql.org/keys/PGDG-RPM-GPG-KEY-SLES16 && \
+    zypper -q install -y https://download.postgresql.org/pub/repos/zypp/reporpms/LEAP-16.0-x86_64/pgdg-opensuse-leap-repo-latest.noarch.rpm
+
 # Generate a list of original packages, update install PostgreSQL
 RUN rpm -qa --qf "%{NAME}\n" > /opt/packages-image.txt && \
-    rpm --import https://zypp.postgresql.org/keys/PGDG-RPM-GPG-KEY-SLES16 && \
     zypper -q update -y && \
-    zypper -q install -y --allow-downgrade \
+    zypper -q install -y \
       postgresql${POSTGRESQL_VER/./} \
       postgresql${POSTGRESQL_VER/./}-server \
       postgresql${POSTGRESQL_VER/./}-devel && \
