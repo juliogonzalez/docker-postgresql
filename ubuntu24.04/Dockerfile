@@ -47,7 +47,10 @@ RUN dpkg --get-selections | grep 'install' | grep -v 'deinstall'|cut -f1 > /opt/
     apt-get -qq -o=Dpkg::Use-Pty=0 update > /dev/null && \
     LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 DEBIAN_FRONTEND=noninteractive apt-get -qq -o=Dpkg::Use-Pty=0 -y install ca-certificates && \
     LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 DEBIAN_FRONTEND=noninteractive apt-get -qq -o=Dpkg::Use-Pty=0 -y dist-upgrade > /dev/null && \
-    [ ${POSTGRESQL_TESTING} -eq 1 ] && TESTING="-testing"; echo "deb https://download.postgresql.org/pub/repos/apt/ noble-pgdg${testing} ${POSTGRESQL_VER} main" >> /etc/apt/sources.list.d/pgdg.list && \
+    echo "deb https://apt.postgresql.org/pub/repos/apt/ noble-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
+    [ ${POSTGRESQL_TESTING} -eq 1 ] && TESTING='-snapshot'; \
+    echo "deb https://apt.postgresql.org/pub/repos/apt/ noble-pgdg${TESTING} ${POSTGRESQL_VER}" >> /etc/apt/sources.list.d/pgdg.list && \
+    echo 'Package: *\nPin: release o=apt.postgresql.org\nPin-Priority: 800' > /etc/apt/preferences.d/pgdg.pref && \
     apt-get -qq -o=Dpkg::Use-Pty=0 update > /dev/null && \
     LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 DEBIAN_FRONTEND=noninteractive apt-get -qq -o=Dpkg::Use-Pty=0 -y install \
      postgresql-${POSTGRESQL_VER} \

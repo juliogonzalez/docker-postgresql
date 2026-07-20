@@ -9,7 +9,7 @@ For example they are used as a base to build [container images for tds_fdw Count
 Current distributions available:
 
 * openSUSE Leap 16.0
-* Rocky Linux 8
+* Rocky Linux 9
 * Ubuntu 24.04
 
 Current PostgreSQL versions available:
@@ -20,6 +20,7 @@ Current PostgreSQL versions available:
 * 16
 * 17
 * 18
+* 19
 
 # Building images
 
@@ -31,7 +32,7 @@ Run:
 
 # Running the images
 
-Tu run, for example PostgreSQL 18 under Rocky Linux 8:
+Tu run, for example PostgreSQL 18 under Rocky Linux 9:
 
 ```
 docker run -t --name test -e "DB_NAME=mydbname" -e "DB_PASS=mydbpassword" juliogonzalez/rockylinux8-postgresql:18
