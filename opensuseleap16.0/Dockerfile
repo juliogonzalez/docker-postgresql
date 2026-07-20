@@ -31,9 +31,10 @@ ENV POSTGRESQL_TESTING=${POSTGRESQL_TESTING}
 # PostgreSQL packages (cache will be used for previous steps)
 ARG DATE=None
 
-# Add PostgreSQL's repository
+# Add PostgreSQL's repository, and enable testing if needed
 RUN rpm --import https://zypp.postgresql.org/keys/PGDG-RPM-GPG-KEY-SLES16 && \
-    zypper -q install -y https://download.postgresql.org/pub/repos/zypp/reporpms/LEAP-16.0-x86_64/pgdg-opensuse-leap-repo-latest.noarch.rpm
+    zypper -q install -y https://download.postgresql.org/pub/repos/zypp/reporpms/LEAP-16.0-x86_64/pgdg-opensuse-leap-repo-latest.noarch.rpm && \
+    if [ ${POSTGRESQL_TESTING} -eq 1 ]; then zypper mr -e pgdg${POSTGRESQL_VER/./}-updates-testing; fi
 
 # Generate a list of original packages, update install PostgreSQL
 RUN rpm -qa --qf "%{NAME}\n" > /opt/packages-image.txt && \
